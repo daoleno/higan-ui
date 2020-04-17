@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import "./styles.css";
 
-function Record() {
+function Card() {
   const [data, setData] = useState({ height: "", result: [] });
   const [url, setUrl] = useState(
     "http://127.0.0.1:8080/tombstone/records"
@@ -76,4 +76,4 @@ function Record() {
   );
 }
 
-export default Record;
+export default Card;
