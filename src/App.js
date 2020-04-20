@@ -1,11 +1,9 @@
 import React from "react";
-import Card from "./card";
-import Search from "./search";
-import "./styles.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Publish from './publish';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./home";
-import Nav from './nav'
+import Nav from './nav';
+import Publish from './publish';
+import "./styles.css";
 
 function App() {
   return (

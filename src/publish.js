@@ -1,5 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
-import Nav from "./nav";
+import React from "react";
 import "./styles.css";
 
 function Publish() {
@@ -20,65 +19,56 @@ function Publish() {
               <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
                   <label
-                    for="first_name"
+                    for="name"
                     class="block text-sm font-medium leading-5 text-gray-700"
                   >
-                    First name
+                    Name
                   </label>
                   <input
-                    id="first_name"
+                    id="name"
                     class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                   />
                 </div>
 
+
+
                 <div class="col-span-6 sm:col-span-3">
                   <label
-                    for="last_name"
-                    class="block text-sm font-medium leading-5 text-gray-700"
-                  >
-                    Last name
-                  </label>
-                  <input
-                    id="last_name"
-                    class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                  />
-                </div>
-                <div class="col-span-6 sm:col-span-3">
-                  <label
-                    for="first_name"
+                    for="born" 
                     class="block text-sm font-medium leading-5 text-gray-700"
                   >
                     Born
                   </label>
                   <input
-                    id="first_name"
+                    type="date" name="trip-start" value="2018-07-22" min="1994-01-01" max="2018-12-31"
+                    id="born"
                     class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                   />
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
                   <label
-                    for="last_name"
+                    for="dead"
                     class="block text-sm font-medium leading-5 text-gray-700"
                   >
                     Dead
                   </label>
                   <input
-                    id="last_name"
+                    id="dead"
                     class="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                   />
                 </div>
 
                 <div class="col-span-6 ">
                   <label
-                    for="about"
+                    for="memo"
                     class="block text-sm leading-5 font-medium text-gray-700"
                   >
                     Memo
                   </label>
                   <div class="rounded-md shadow-sm">
                     <textarea
-                      id="about"
+                      id="memo"
                       rows="3"
                       class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                       placeholder="He never grew up, but he never stopped growing."
