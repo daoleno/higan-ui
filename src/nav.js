@@ -13,13 +13,13 @@ function Nav() {
         </Link>
       </div>
 
-      <div class="mt-4 flex md:mt-0 md:ml-4">
+      <div className="mt-4 flex md:mt-0 md:ml-4">
         <Search />
-        <span class="ml-3 shadow-sm rounded-md">
+        <span className="ml-3 shadow-sm rounded-md">
           <Link to="/publish">
             <button
               type="button"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out"
             >
               Publish
             </button>
