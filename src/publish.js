@@ -1,11 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
+import axios from "axios";
 import "./styles.css";
 
 function Publish() {
-  const selectedTags = tags => {
-		console.log(tags);
+  const name = useFormInput("李文亮");
+  const born = useFormInput();
+  const died = useFormInput();
+  const memo = useFormInput();
+  const [tags, setTags] = useState(["covid19"]);
+  const selectedTags = (tags) => {
+    setTags(tags);
   };
-  
+
+  const [isError, setIsError] = useState(false);
+
+  const handleSubmit = async (e) => {
+    console.log(name, " ", born, " ", died, " ", tags, " ", memo);
+    e.preventDefault();
+    const record = {
+      base_req: {
+        from: "cosmos1lxmp6c3229lqy8xuv6tfzjd8fwd8q8yqp443hh",
+        memo: "Sent via higan 🚀",
+        chain_id: "higan-test",
+      },
+      name: name.value,
+      born: born.value,
+      died: died.value,
+      memo: memo.value,
+      tag: tags,
+      recorder: "cosmos1lxmp6c3229lqy8xuv6tfzjd8fwd8q8yqp443hh",
+    };
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8080/tombstone/record`,
+        record
+      );
+      console.log(response.data);
+    } catch (error) {
+      setIsError(true);
+    }
+  };
+
   return (
     <div className="relative max-w-7xl mx-auto mt-15">
       <div className="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
@@ -20,7 +55,7 @@ function Publish() {
           </div>
 
           <div className="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
+            <form onSubmit={handleSubmit} method="POST">
               <div className="grid grid-cols-6 gap-4">
                 <div className="col-span-4">
                   <label
@@ -30,7 +65,7 @@ function Publish() {
                     Name
                   </label>
                   <input
-                    id="name"
+                    {...name}
                     className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                   />
                 </div>
@@ -43,22 +78,22 @@ function Publish() {
                     Born
                   </label>
                   <input
+                    {...born}
                     type="date"
-                    name="born"
                     className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                   />
                 </div>
 
                 <div className="col-span-3">
                   <label
-                    for="dead"
+                    for="died"
                     className="block text-sm font-medium leading-5 text-gray-700"
                   >
-                    Dead
+                    died
                   </label>
                   <input
+                    {...died}
                     type="date"
-                    name="dead"
                     className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                   />
                 </div>
@@ -70,7 +105,7 @@ function Publish() {
                   >
                     Tags
                   </label>
-                  <TagsInput selectedTags={selectedTags}  tags={['covid19']}/>
+                  <TagsInput selectedTags={selectedTags} tags={["covid19"]} />
                 </div>
 
                 <div className="col-span-6">
@@ -82,7 +117,8 @@ function Publish() {
                   </label>
                   <div className="rounded-md shadow-sm">
                     <textarea
-                      id="memo"
+                      {...memo}
+                      name="memo"
                       rows="3"
                       className="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                       placeholder="He never grew up, but he never stopped growing."
@@ -95,7 +131,10 @@ function Publish() {
               </div>
 
               <div className="px-4 py-3 text-right sm:px-6">
-                <button type="button" className="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out">
+                <button
+                  type="submit"
+                  className="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out"
+                >
                   Save
                 </button>
               </div>
@@ -123,9 +162,15 @@ const TagsInput = (props) => {
     <div className="flex flex-wrap mt-1 form-input py-2 px-3 w-full block inline-block border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
       <ul className="flex flex-wrap">
         {tags.map((tag, index) => (
-          <li key={index} className="mr-2 my-1 inline-block w-auto rounded-md font-medium text-white bg-indigo-600 ">
+          <li
+            key={index}
+            className="mr-2 my-1 inline-block w-auto rounded-md font-medium text-white bg-indigo-600 "
+          >
             <span className="mx-2">{tag}</span>
-            <span className="text-white cursor-pointer rounded-full mr-2" onClick={() => removeTags(index)}>
+            <span
+              className="text-white cursor-pointer rounded-full mr-2"
+              onClick={() => removeTags(index)}
+            >
               x
             </span>
           </li>
@@ -140,4 +185,14 @@ const TagsInput = (props) => {
   );
 };
 
+function useFormInput(initialValue) {
+  const [value, setValue] = useState(initialValue);
+  function handleChange(e) {
+    setValue(e.target.value);
+  }
+  return {
+    value,
+    onChange: handleChange,
+  };
+}
 export default Publish;
