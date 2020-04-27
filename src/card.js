@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import "./styles.css";
+import { config } from "./config.js";
 
 function Card() {
   const [data, setData] = useState({ height: "", result: [] });
-  const [url, setUrl] = useState("http://127.0.0.1:8080/tombstone/records");
+  const url = config.lcdUrl + "/tombstone/records";
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   useEffect(() => {
@@ -23,7 +24,7 @@ function Card() {
 
   return (
     <Fragment>
-      {isLoading ? (
+      {isLoading || !data.result ? (
         <img className="m-10 h-10" src="loading.svg" alt="loading..." />
       ) : (
         data.result.map((records) =>
