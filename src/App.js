@@ -4,6 +4,7 @@ import Home from "./home";
 import Nav from "./nav";
 import Publish from "./publish";
 import "./styles.css";
+import SearchPage from "./searchPage";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         </Route>
         <Route path="/publish">
           <Publish />
+        </Route>
+        <Route path="/search">
+          <SearchPage />
         </Route>
       </Switch>
     </Router>
