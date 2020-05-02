@@ -3,6 +3,8 @@ import axios from "axios";
 import "./styles.css";
 import { config } from "./config.js";
 
+const unknownAddress = "0001-01-01T00:00:00Z";
+
 function Card() {
   const [data, setData] = useState({ height: "", result: [] });
   const url = config.lcdUrl + "/tombstone/records";
@@ -36,7 +38,6 @@ function Card() {
                     {record.memo}
                   </p>
                 </div>
-
                 <div className="mt-6 flex items-center">
                   <div>
                     <p className="text-sm leading-5 font-medium text-gray-900">
@@ -45,16 +46,30 @@ function Card() {
                       </a>
                     </p>
                     <div className="flex text-sm leading-5 text-gray-500">
-                      <time dateTime="2011-11-18T14:54:39.929Z">
-                        {record.born}
-                      </time>
+                      <span>
+                        {record.born === unknownAddress
+                          ? "?"
+                          : new Intl.DateTimeFormat("en-US").format(
+                              new Date(record.born)
+                            )}
+                      </span>
                       <span className="mx-1">&ndash;</span>
-                      <time dateTime="2020-03-16">
-                        Mar 16, 2020
-                        {record.dead}
-                      </time>
+                      <span>
+                        {record.died === unknownAddress
+                          ? "?"
+                          : new Intl.DateTimeFormat("en-US").format(
+                              new Date(record.died)
+                            )}
+                      </span>
                     </div>
                   </div>
+                </div>
+                <div>
+                  {record.tags.map((tag, index) => (
+                    <span className="inline-flex items-center mr-2 px-2.5 py-0.5 rounded-md text-xs font-medium leading-4 bg-indigo-100 text-indigo-800">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>

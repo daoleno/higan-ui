@@ -6,7 +6,7 @@ import {
   verifyTx,
 } from "@tendermint/sig";
 import axios from "axios";
-import React, { useState, Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { config } from "./config.js";
 import "./styles.css";
 
@@ -23,9 +23,11 @@ function Publish() {
   const [isError, setIsError] = useState(false);
   const [isSubmit, seIsSubmit] = useState(false);
   const [errMsg, setErrMsg] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const record = {
       base_req: {
         from: config.recorder,
@@ -36,7 +38,7 @@ function Publish() {
       born: new Date(born.value).toJSON(),
       died: new Date(died.value).toJSON(),
       memo: memo.value,
-      tag: tags,
+      tags: tags,
       recorder: config.recorder,
     };
     try {
@@ -74,21 +76,28 @@ function Publish() {
       }
 
       seIsSubmit(true);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       setIsError(true);
       setErrMsg(error.toString());
     }
+  };
+
+  const handleAlert = async (e) => {
+    e.preventDefault();
+    seIsSubmit(false);
   };
 
   return (
     <Fragment>
       {isError ? (
         <div className="relative max-w-7xl mx-auto mt-15">
-          <div class="rounded-md bg-red-50 p-4">
-            <div class="flex">
-              <div class="flex-shrink-0">
+          <div className="rounded-md bg-red-50 p-4">
+            <div className="flex">
+              <div className="flex-shrink-0">
                 <svg
-                  class="h-5 w-5 text-red-400"
+                  className="h-5 w-5 text-red-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -99,12 +108,12 @@ function Publish() {
                   />
                 </svg>
               </div>
-              <div class="ml-3">
-                <h3 class="text-sm leading-5 font-medium text-red-800">
+              <div className="ml-3">
+                <h3 className="text-sm leading-5 font-medium text-red-800">
                   There were errors with your submission
                 </h3>
-                <div class="mt-2 text-sm leading-5 text-red-700">
-                  <ul class="list-disc pl-5">
+                <div className="mt-2 text-sm leading-5 text-red-700">
+                  <ul className="list-disc pl-5">
                     <li>{errMsg}</li>
                   </ul>
                 </div>
@@ -136,7 +145,10 @@ function Publish() {
               </div>
               <div className="ml-auto pl-3">
                 <div className="-mx-1.5 -my-1.5">
-                  <button className="inline-flex rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:bg-green-100 transition ease-in-out duration-150">
+                  <button
+                    onClick={handleAlert}
+                    className="inline-flex rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:bg-green-100 transition ease-in-out duration-150"
+                  >
                     <svg
                       className="h-5 w-5"
                       viewBox="0 0 20 20"
@@ -160,29 +172,27 @@ function Publish() {
       <div className="relative max-w-7xl mx-auto mt-15">
         <div className="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
           <div className="md:grid md:grid-cols-3 md:gap-6">
-            <div className="md:col-span-1">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Remember Card
-              </h3>
-              <p className="mt-1 text-sm leading-5 text-gray-500">
-                The people you will remember forever.
-              </p>
-            </div>
+            <img
+              className="transform scale-75 sm:scale-75 md:scale-100 lg:scale-100 lg:mt-7"
+              src="undraw_Taken_if77.svg"
+              alt="R.I.P."
+            />
 
             <div className="mt-5 md:mt-0 md:col-span-2">
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-6 gap-4">
-                  <div className="col-span-4">
+                  <div className="col-span-6 lg:col-span-4">
                     <label className="block text-sm font-medium leading-5 text-gray-700">
                       Name
                     </label>
                     <input
                       {...name}
                       className="mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                      required
                     />
                   </div>
 
-                  <div className="col-span-3">
+                  <div className="col-span-3 lg:col-span-3 ">
                     <label className="block text-sm font-medium leading-5 text-gray-700">
                       Born
                     </label>
@@ -193,7 +203,7 @@ function Publish() {
                     />
                   </div>
 
-                  <div className="col-span-3">
+                  <div className="col-span-3 lg:col-span-3">
                     <label className="block text-sm font-medium leading-5 text-gray-700">
                       Died
                     </label>
@@ -204,14 +214,14 @@ function Publish() {
                     />
                   </div>
 
-                  <div className="col-span-4">
+                  <div className="col-span-6 lg:col-span-4 ">
                     <label className="block text-sm font-medium leading-5 text-gray-700">
                       Tags
                     </label>
                     <TagsInput selectedTags={selectedTags} tags={["covid19"]} />
                   </div>
 
-                  <div className="col-span-6">
+                  <div className=" col-span-6 lg:col-span-6">
                     <label className="block text-sm leading-5 font-medium text-gray-700">
                       Memo
                     </label>
@@ -222,6 +232,8 @@ function Publish() {
                         rows="3"
                         className="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         placeholder="He never grew up, but he never stopped growing."
+                        required
+                        maxLength="140"
                       ></textarea>
                     </div>
                     <p className="mt-2 text-sm text-gray-500">
@@ -232,12 +244,21 @@ function Publish() {
                 </div>
 
                 <div className="px-4 py-3 text-right sm:px-6">
-                  <button
-                    type="submit"
-                    className="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out"
-                  >
-                    Save
-                  </button>
+                  {isLoading ? (
+                    <button
+                      disabled
+                      className="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out"
+                    >
+                      Saving
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-500 focus:outline-none focus:shadow-outline-blue active:bg-indigo-600 transition duration-150 ease-in-out"
+                    >
+                      Save
+                    </button>
+                  )}
                 </div>
               </form>
             </div>
@@ -262,22 +283,29 @@ const TagsInput = (props) => {
   };
   return (
     <div className="flex flex-wrap mt-1 form-input py-2 px-3 w-full block inline-block border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-      <ul className="flex flex-wrap">
-        {tags.map((tag, index) => (
-          <li
-            key={index}
-            className="mr-2 my-1 inline-block w-auto rounded-md font-medium text-white bg-indigo-600 "
+      {tags.map((tag, index) => (
+        <span className="inline-flex items-center mr-2 px-2.5 py-0.5 rounded-md text-xs font-medium leading-4 bg-indigo-100 text-indigo-800">
+          {tag}
+          <button
+            type="button"
+            className="flex-shrink-0 ml-1.5 inline-flex text-indigo-500 focus:outline-none focus:text-indigo-700"
+            onClick={() => removeTags(index)}
           >
-            <span className="mx-2">{tag}</span>
-            <span
-              className="text-white cursor-pointer rounded-full mr-2"
-              onClick={() => removeTags(index)}
+            <svg
+              className="h-2 w-2"
+              stroke="currentColor"
+              fill="none"
+              viewBox="0 0 8 8"
             >
-              x
-            </span>
-          </li>
-        ))}
-      </ul>
+              <path
+                stroke-linecap="round"
+                stroke-width="1.5"
+                d="M1 1l6 6m0-6L1 7"
+              />
+            </svg>
+          </button>
+        </span>
+      ))}
       <input
         onKeyUp={(event) => (event.key === "Enter" ? addTags(event) : null)}
         placeholder="Press enter to add tags"
