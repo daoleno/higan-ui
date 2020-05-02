@@ -1,11 +1,44 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { config } from "./config.js";
 import "./styles.css";
 
 function Footer() {
+  const [height, setHeight] = useState();
+  const [records, setRecords] = useState();
+  const blockUrl = config.lcdUrl + "/blocks/latest";
+  const txsUrl = config.lcdUrl + "/txs?message.action=setRecord";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const blockRes = await axios(blockUrl);
+        setHeight(blockRes.data.block.header.height);
+        const txsRes = await axios(txsUrl);
+        setRecords(txsRes.data.total_count);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [blockUrl, txsUrl]);
+
   return (
     <div className="bg-white">
       <div className="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center md:order-2">
+          <span className="ml-6 text-gray-400 hover:text-gray-500">
+            Height:
+            <span className="ml-1 text-green-400 hover:text-green-500">
+              {height}
+            </span>
+          </span>
+          <span className="ml-6 text-gray-400 hover:text-gray-500">
+            Records:
+            <span className="ml-1 text-green-400 hover:text-green-500">
+              {records}
+            </span>
+          </span>
           <a
             href="https://twitter.com/dao_leno"
             className="ml-6 text-gray-400 hover:text-gray-500"
