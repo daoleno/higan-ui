@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
-import { config } from "./config.js";
 import "./styles.css";
 
 const unknownAddress = "0001-01-01T00:00:00Z";
 
 function Card() {
   const [data, setData] = useState({ height: "", result: [] });
-  const url = config.lcdUrl + "/tombstone/records";
+  const url = process.env.REACT_APP_LCDURL + "/tombstone/records";
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   useEffect(() => {

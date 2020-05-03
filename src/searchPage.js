@@ -1,14 +1,13 @@
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { config } from "./config.js";
 import "./styles.css";
 
 const unknownAddress = "0001-01-01T00:00:00Z";
 
 function SearchPage() {
   const [data, setData] = useState({ height: "", result: [] });
-  const url = config.lcdUrl + "/tombstone/records";
+  const url = process.env.REACT_APP_LCDURL + "/tombstone/records";
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const location = useLocation();

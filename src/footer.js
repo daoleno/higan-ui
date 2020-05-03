@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { config } from "./config.js";
 import "./styles.css";
 
 function Footer() {
   const [height, setHeight] = useState();
   const [records, setRecords] = useState();
-  const blockUrl = config.lcdUrl + "/blocks/latest";
-  const txsUrl = config.lcdUrl + "/txs?message.action=setRecord";
+  const blockUrl = process.env.REACT_APP_LCDURL + "/blocks/latest";
+  const txsUrl = process.env.REACT_APP_LCDURL + "/txs?message.action=setRecord";
 
   useEffect(() => {
     const fetchData = async () => {

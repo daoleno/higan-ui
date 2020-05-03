@@ -7,7 +7,6 @@ import {
 } from "@tendermint/sig";
 import axios from "axios";
 import React, { Fragment, useState } from "react";
-import { config } from "./config.js";
 import "./styles.css";
 
 function Publish() {
@@ -30,34 +29,34 @@ function Publish() {
     setIsLoading(true);
     const record = {
       base_req: {
-        from: config.recorder,
+        from: process.env.REACT_APP_RECORDER,
         memo: "Sent via higan 🚀",
-        chain_id: config.chainId,
+        chain_id: process.env.REACT_APP_CHAINID,
       },
       name: name.value,
       born: new Date(born.value).toJSON(),
       died: new Date(died.value).toJSON(),
       memo: memo.value,
       tags: tags,
-      recorder: config.recorder,
+      recorder: process.env.REACT_APP_RECORDER,
     };
     try {
       const response = await axios.post(
-        config.lcdUrl + "/tombstone/record",
+        process.env.REACT_APP_LCDURL + "/tombstone/record",
         record
       );
 
       // Sign stdTx
       let stdTx = response.data.value;
-      const wallet = createWalletFromMnemonic(config.mnemonic); // BIP39 mnemonic string
+      const wallet = createWalletFromMnemonic(process.env.REACT_APP_MNEMONIC); // BIP39 mnemonic string
       // Get account
       const accRes = await axios.get(
-        config.lcdUrl + "/auth/accounts/" + record.recorder
+        process.env.REACT_APP_LCDURL + "/auth/accounts/" + record.recorder
       );
       const acc = accRes.data.result.value;
       const signMeta = {
         account_number: acc.account_number.toString(),
-        chain_id: config.chainId,
+        chain_id: process.env.REACT_APP_CHAINID,
         sequence: acc.sequence.toString(),
       };
       // Ensure signTx can verify signatures.
@@ -70,7 +69,10 @@ function Publish() {
 
       // Broadcast tx
       const broadcastTx = createBroadcastTx(signedStdTx, BROADCAST_MODE_BLOCK);
-      const res = await axios.post(config.lcdUrl + "/txs", broadcastTx);
+      const res = await axios.post(
+        process.env.REACT_APP_LCDURL + "/txs",
+        broadcastTx
+      );
       if (res.data.code !== undefined) {
         throw new Error(res.data.raw_log);
       }
