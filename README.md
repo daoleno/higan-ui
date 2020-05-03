@@ -1,4 +1,4 @@
-# Higan UI &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/daoleno/higan/blob/master/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/daoleno/higan/pulls)
+# Higan UI &middot; [![Netlify Status](https://api.netlify.com/api/v1/badges/442de274-a965-4c70-9f35-1eee1fcaefd9/deploy-status)](https://app.netlify.com/sites/higan-bana/deploys) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/daoleno/higan/blob/master/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/daoleno/higan/pulls)
 
 The front end of the project [higan](https://github.com/daoleno/higan).
 
