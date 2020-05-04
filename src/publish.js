@@ -179,8 +179,20 @@ function Publish() {
                 R.I.P.
               </h3>
               <p className="mt-1 text-sm leading-5 text-gray-500">
-                The people you will remember forever.
+                Pray for him/her.
               </p>
+
+              <h3 className="mt-12 text-lg font-medium leading-6 text-gray-900">
+                Donate - HELP FIGHT CORONAVIRUS
+              </h3>
+              <a
+                className="text-sm leading-5 text-indigo-600"
+                href="https://covid19responsefund.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                COVID-19 Solidarity Response Fund for WHO
+              </a>
             </div>
 
             <div className="mt-5 md:mt-0 md:col-span-2">
@@ -221,7 +233,7 @@ function Publish() {
 
                   <div className="col-span-6 lg:col-span-4 ">
                     <label className="block text-sm font-medium leading-5 text-gray-700">
-                      Occupation/Cause of death
+                      Occupation
                     </label>
                     <TagsInput selectedTags={selectedTags} tags={["covid19"]} />
                   </div>
