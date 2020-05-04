@@ -235,7 +235,7 @@ function Publish() {
                         className="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         placeholder="He never grew up, but he never stopped growing."
                         required
-                        maxLength="140"
+                        maxLength="1024"
                       ></textarea>
                     </div>
                     <p className="mt-2 text-sm text-gray-500">
