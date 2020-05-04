@@ -174,11 +174,14 @@ function Publish() {
       <div className="relative max-w-7xl mx-auto mt-15">
         <div className="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
           <div className="md:grid md:grid-cols-3 md:gap-6">
-            <img
-              className="transform scale-75 sm:scale-75 md:scale-100 lg:scale-100 lg:mt-7"
-              src="undraw_Taken_if77.svg"
-              alt="R.I.P."
-            />
+            <div className="md:col-span-1">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                R.I.P.
+              </h3>
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                The people you will remember forever.
+              </p>
+            </div>
 
             <div className="mt-5 md:mt-0 md:col-span-2">
               <form onSubmit={handleSubmit}>
@@ -218,7 +221,7 @@ function Publish() {
 
                   <div className="col-span-6 lg:col-span-4 ">
                     <label className="block text-sm font-medium leading-5 text-gray-700">
-                      Tags
+                      Occupation/Cause of death
                     </label>
                     <TagsInput selectedTags={selectedTags} tags={["covid19"]} />
                   </div>
